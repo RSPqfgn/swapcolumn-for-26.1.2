@@ -1,0 +1,16 @@
+{
+	"required": true,
+	"package": "tapm.swapbar.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"client": [
+		"KeyboardMixin",
+		"MouseMixin",
+		"InGameHudMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

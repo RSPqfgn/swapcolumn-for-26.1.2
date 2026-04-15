@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "swapbar",
+	"version": "${version}",
+	"name": "SwapBar",
+	"description": "Quickly swap hotbar items with inventory items directly above them using number keys, a keybind, or hold-and-scroll.",
+	"authors": [
+		"TAPM"
+	],
+	"license": "CC0-1.0",
+	"icon": "assets/swapbar/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"tapm.swapbar.client.SwapBarClient"
+		]
+	},
+	"mixins": [
+		"swapbar.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.1",
+		"minecraft": "~26.2-",
+		"java": ">=25",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"modmenu": "*"
+	}
+}

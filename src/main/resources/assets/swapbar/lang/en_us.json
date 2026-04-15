@@ -1,0 +1,10 @@
+{
+  "key.swapbar.swap_menu": "SwapBar Menu",
+  "key.category.swapbar": "SwapBar",
+  "key.category.swapbar.category": "SwapBar",
+  "category.swapbar": "SwapBar",
+  "screen.swapbar.config": "SwapBar Configuration",
+  "option.swapbar.display_mode": "Display Mode",
+  "option.swapbar.display_mode.inventory": "Inventory",
+  "option.swapbar.display_mode.hotbar": "Hotbar"
+}

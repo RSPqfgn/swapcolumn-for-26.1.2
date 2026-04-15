@@ -1,0 +1,114 @@
+package tapm.swapbar.mixin;
+
+import tapm.swapbar.client.SwapBarRenderer;
+import tapm.swapbar.client.SwapBarState;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.mojang.blaze3d.pipeline.RenderPipeline;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.Hud;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin(Hud.class)
+public class InGameHudMixin {
+
+    // Hook to render
+    @Inject(method = "extractItemHotbar", at = @At("TAIL"))
+    private void swapbar$afterHotbar(GuiGraphicsExtractor gfx, DeltaTracker dt,
+                                     CallbackInfo ci) {
+        if (SwapBarState.isActive()) {
+            SwapBarRenderer.render(gfx);
+        }
+    }
+
+    // This lets us replace the slot in the hotbar with a custom one (first of the hotbar texture)
+    @WrapOperation(
+            method = "extractItemHotbar",
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V",
+                    ordinal = 0)
+    )
+    private void swapbar$wrapHotbarBackground(
+            GuiGraphicsExtractor gfx,
+            RenderPipeline pipeline,
+            Identifier sprite,
+            int x, int y, int w, int h,
+            Operation<Void> original) {
+
+        if (SwapBarState.isActive() && !SwapBarState.isOpenedWithKeybind()) {
+            int hSlot = SwapBarState.getHotbarSlot();
+            int slotStart = 1 + hSlot * 20;
+
+            // 1. Left part of hotbar (before active slot)
+            if (slotStart > 0) {
+                gfx.blitSprite(pipeline, sprite, 182, 22, 0, 0, x, y, slotStart, 22, -1);
+            }
+
+            // 2. Active slot: replaced with slice 1 (pixels 1-20, shows "1" in Dandelion)
+            gfx.blitSprite(pipeline, sprite, 182, 22, 1, 0, x + slotStart, y, 20, 22, -1);
+
+            // 3. Right part of hotbar (after active slot)
+            int rightStart = slotStart + 20;
+            int rightWidth = 182 - rightStart;
+            if (rightWidth > 0) {
+                gfx.blitSprite(pipeline, sprite, 182, 22, rightStart, 0, x + rightStart, y, rightWidth, 22, -1);
+            }
+        } else {
+            original.call(gfx, pipeline, sprite, x, y, w, h);
+        }
+    }
+
+    // Suppress Hotbar Selection Texture if needed
+    @WrapOperation(
+            method = "extractItemHotbar",
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V",
+                    ordinal = 1)
+    )
+    private void swapbar$wrapSelection(
+            GuiGraphicsExtractor gfx,
+            RenderPipeline pipeline,
+            Identifier sprite,
+            int x, int y, int w, int h,
+            Operation<Void> original) {
+
+        if (SwapBarState.isActive()) {
+            return;
+        } else {
+            original.call(gfx, pipeline, sprite, x, y, w, h);
+        }
+    }
+
+    // Suppress specific item rendering we can replace
+    @WrapOperation(
+            method = "extractItemHotbar",
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/Hud;extractSlot(Lnet/minecraft/client/gui/GuiGraphicsExtractor;II Lnet/minecraft/client/DeltaTracker;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;I)V",
+                    ordinal = -1)   // -1 = alle Aufrufe (wir filtern selbst)
+    )
+    private void swapbar$wrapActiveSlot(
+            Hud hud,
+            GuiGraphicsExtractor graphics,
+            int x,
+            int y,
+            DeltaTracker deltaTracker,
+            Player player,
+            ItemStack itemStack,
+            int seed,
+            Operation<Void> original
+    )
+    {
+        if (SwapBarState.isActive() && player.getInventory().getSelectedItem() == itemStack) {
+            return;
+        } else {
+            original.call(hud, graphics, x, y, deltaTracker, player, itemStack, seed);
+        }
+    }
+}
