@@ -1,0 +1,10 @@
+{
+  "key.swapcolumn.swap_menu": "SwapColumn Menü",
+  "key.category.swapcolumn": "SwapColumn",
+  "key.category.swapcolumn.category": "SwapColumn",
+  "category.swapcolumn": "SwapColumn",
+  "screen.swapcolumn.config": "SwapColumn Konfiguration",
+  "option.swapcolumn.display_mode": "Darstellungsmodus",
+  "option.swapcolumn.display_mode.inventory": "Inventar",
+  "option.swapcolumn.display_mode.hotbar": "Hotbar"
+}

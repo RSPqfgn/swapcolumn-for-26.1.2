@@ -1,6 +1,6 @@
-package tapm.swapbar.mixin;
+package tapm.swapcolumn.mixin;
 
-import tapm.swapbar.client.SwapBarState;
+import tapm.swapcolumn.client.SwapColumnState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,16 +13,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MouseMixin {
 
     @Inject(method = "onScroll", at = @At("HEAD"), cancellable = true)
-    private void swapbar$onScroll(long window, double horizontal, double vertical,
+    private void swapcolumn$onScroll(long window, double horizontal, double vertical,
                                   CallbackInfo ci) {
-        if (!SwapBarState.isActive()) return;
+        if (!SwapColumnState.isActive()) return;
 
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.gui.screen() != null) return;
 
-        switch (SwapBarState.getPhase()) {
+        switch (SwapColumnState.getPhase()) {
             case KEY_HELD -> {
-                SwapBarState.transitionToScrollMode();
+                SwapColumnState.transitionToScrollMode();
                 applyScroll(vertical);
                 ci.cancel();
             }
@@ -31,7 +31,7 @@ public class MouseMixin {
                 ci.cancel();
             }
             case MENU_WAITING -> {
-                SwapBarState.close();
+                SwapColumnState.close();
                 ci.cancel();
             }
             default -> {}
@@ -40,7 +40,7 @@ public class MouseMixin {
 
     @Unique
     private static void applyScroll(double vertical) {
-        if (vertical > 0) SwapBarState.scrollUp();
-        else if (vertical < 0) SwapBarState.scrollDown();
+        if (vertical > 0) SwapColumnState.scrollUp();
+        else if (vertical < 0) SwapColumnState.scrollDown();
     }
 }

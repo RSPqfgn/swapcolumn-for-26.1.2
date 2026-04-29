@@ -1,11 +1,11 @@
-package tapm.swapbar.client;
+package tapm.swapcolumn.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerInput;
 
 
-public class SwapBarState {
+public class SwapColumnState {
 
     public enum Phase {
         IDLE,
@@ -30,7 +30,7 @@ public class SwapBarState {
     public static int     getMenuHeight()       { return menuHeight; }
     public static boolean isOpenedWithKeybind() { return openedWithKeybind; }
 
-    static SwapBarConfig config = SwapBarConfig.get();
+    static SwapColumnConfig config = SwapColumnConfig.get();
 
     // Slot Mapping
 

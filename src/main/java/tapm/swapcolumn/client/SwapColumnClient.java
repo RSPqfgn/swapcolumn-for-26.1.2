@@ -1,4 +1,4 @@
-package tapm.swapbar.client;
+package tapm.swapcolumn.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.api.ClientModInitializer;
@@ -11,9 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class SwapBarClient implements ClientModInitializer {
+public class SwapColumnClient implements ClientModInitializer {
 
-    public static final String MOD_ID = "swapbar";
+    public static final String MOD_ID = "swapcolumn";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     public static KeyMapping swapKeyMapping;
@@ -21,29 +21,29 @@ public class SwapBarClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
-        LOGGER.info("SwapBar client initializing...");
+        LOGGER.info("SwapColumn client initializing...");
 
-        KeyMapping.Category swapbarCategory =
-                KeyMapping.Category.register(Identifier.fromNamespaceAndPath("swapbar", "category"));
+        KeyMapping.Category swapcolumnCategory =
+                KeyMapping.Category.register(Identifier.fromNamespaceAndPath("swapcolumn", "category"));
 
         swapKeyMapping = new KeyMapping(
-                "key.swapbar.swap_menu",      // translation key for the keybind name
+                "key.swapcolumn.swap_menu",      // translation key for the keybind name
                 InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_UNKNOWN,        // unbound by default
-                swapbarCategory
+                swapcolumnCategory
         );
 
         KeyMappingHelper.registerKeyMapping(swapKeyMapping);
 
-        SwapBarConfig.get();
+        SwapColumnConfig.get();
 
         // Close the Menu if another pops up
         ClientTickEvents.END_CLIENT_TICK.register(mc -> {
-            if (SwapBarState.isActive() && mc.gui.screen() != null) {
-                SwapBarState.close();
+            if (SwapColumnState.isActive() && mc.gui.screen() != null) {
+                SwapColumnState.close();
             }
         });
 
-        LOGGER.info("SwapBar client initialized!");
+        LOGGER.info("SwapColumn client initialized!");
     }
 }

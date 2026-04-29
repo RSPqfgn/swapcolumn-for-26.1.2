@@ -1,4 +1,4 @@
-package tapm.swapbar.client;
+package tapm.swapcolumn.client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -10,12 +10,12 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class SwapBarConfig {
+public class SwapColumnConfig {
 
     private static final Path CONFIG_PATH = FabricLoader.getInstance()
-            .getConfigDir().resolve("swapbar.json");
+            .getConfigDir().resolve("swapcolumn.json");
 
-    private static SwapBarConfig instance;
+    private static SwapColumnConfig instance;
 
     // Cycling through vertical hotbar
     // Enable if you like it - remember you can always scroll down to the top on your first scroll action
@@ -25,9 +25,9 @@ public class SwapBarConfig {
     // Disable if the Slots look weird/are incompatible with the loaded Texture Pack
     public boolean enableSlotTexture = true;
 
-    public static SwapBarConfig get() {
+    public static SwapColumnConfig get() {
         if (instance == null) {
-            instance = new SwapBarConfig();
+            instance = new SwapColumnConfig();
             instance.load();
         }
         return instance;
@@ -49,7 +49,7 @@ public class SwapBarConfig {
                 enableSlotTexture = json.get("enableSlotTexture").getAsBoolean();
             }
         } catch (Exception e) {
-            SwapBarClient.LOGGER.warn("Failed to load SwapBar config, using defaults", e);
+            SwapColumnClient.LOGGER.warn("Failed to load SwapColumn config, using defaults", e);
         }
     }
 
@@ -69,7 +69,7 @@ public class SwapBarConfig {
                 writer.write(gson.toJson(json));
             }
         } catch (Exception e) {
-            SwapBarClient.LOGGER.warn("Failed to save SwapBar config", e);
+            SwapColumnClient.LOGGER.warn("Failed to save SwapColumn config", e);
         }
     }
 }

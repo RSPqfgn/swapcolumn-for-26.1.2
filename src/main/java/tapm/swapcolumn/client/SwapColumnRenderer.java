@@ -1,4 +1,4 @@
-package tapm.swapbar.client;
+package tapm.swapcolumn.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -8,7 +8,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
-public class SwapBarRenderer {
+public class SwapColumnRenderer {
 
     // Vanilla hotbar texture dimensions
     private static final int HB_WIDTH      = 182;
@@ -29,11 +29,11 @@ public class SwapBarRenderer {
     private static final int HB_SL_WIDTH   = 24;
     private static final int HB_SL_HEIGHT  = 23;
 
-    private static final SwapBarConfig config = SwapBarConfig.get();
+    private static final SwapColumnConfig config = SwapColumnConfig.get();
 
     // Entry point — called from InGameHudMixin at TAIL of extractItemHotbar
     public static void render(GuiGraphicsExtractor gfx) {
-        if (!SwapBarState.isActive()) return;
+        if (!SwapColumnState.isActive()) return;
 
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) return;
@@ -47,8 +47,8 @@ public class SwapBarRenderer {
         int scaledW    = gfx.guiWidth();
         int scaledH    = gfx.guiHeight();
 
-        int hSlot      = SwapBarState.getHotbarSlot();
-        int menuHeight = SwapBarState.getMenuHeight();  // highest visible row (1–3)
+        int hSlot      = SwapColumnState.getHotbarSlot();
+        int menuHeight = SwapColumnState.getMenuHeight();  // highest visible row (1–3)
         int selIdx     = getSelectedIndex();             // selected row (0 = hotbar slot)
         Font font      = mc.font;
 
@@ -72,7 +72,7 @@ public class SwapBarRenderer {
 
         for (int v = 0; v <= menuHeight; v++) {
             int slotY   = hotbarY - v * SLOT_STRIDE;
-            int invIdx  = SwapBarState.getInventorySlot(v);
+            int invIdx  = SwapColumnState.getInventorySlot(v);
             ItemStack stack = inv.getItem(invIdx);
 
             if (!stack.isEmpty()) {
@@ -120,7 +120,7 @@ public class SwapBarRenderer {
 
             // In keybind mode the menu always shows slots 1–3 in order (like a fixed palette).
             // In number mode the column is rooted at the active hotbar slot, so we shift by one extra slot.
-            int offsetX = SwapBarState.isOpenedWithKeybind()
+            int offsetX = SwapColumnState.isOpenedWithKeybind()
                     ? HB_START + HB_SLOT_WIDTH * (v - 1)
                     : HB_START + HB_SLOT_WIDTH * v;
 
@@ -163,8 +163,8 @@ public class SwapBarRenderer {
 
     // Returns the currently highlighted row index.
     private static int getSelectedIndex() {
-        if (SwapBarState.getPhase() == SwapBarState.Phase.SCROLL_MODE) {
-            int i = SwapBarState.getScrollIndex();
+        if (SwapColumnState.getPhase() == SwapColumnState.Phase.SCROLL_MODE) {
+            int i = SwapColumnState.getScrollIndex();
             return i == -1 ? 0 : i;
         }
         return 0;

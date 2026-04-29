@@ -1,7 +1,7 @@
-package tapm.swapbar.mixin;
+package tapm.swapcolumn.mixin;
 
-import tapm.swapbar.client.SwapBarRenderer;
-import tapm.swapbar.client.SwapBarState;
+import tapm.swapcolumn.client.SwapColumnRenderer;
+import tapm.swapcolumn.client.SwapColumnState;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
@@ -21,10 +21,10 @@ public class InGameHudMixin {
 
     // Hook to render
     @Inject(method = "extractItemHotbar", at = @At("TAIL"))
-    private void swapbar$afterHotbar(GuiGraphicsExtractor gfx, DeltaTracker dt,
+    private void swapcolumn$afterHotbar(GuiGraphicsExtractor gfx, DeltaTracker dt,
                                      CallbackInfo ci) {
-        if (SwapBarState.isActive()) {
-            SwapBarRenderer.render(gfx);
+        if (SwapColumnState.isActive()) {
+            SwapColumnRenderer.render(gfx);
         }
     }
 
@@ -35,15 +35,15 @@ public class InGameHudMixin {
                     target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V",
                     ordinal = 0)
     )
-    private void swapbar$wrapHotbarBackground(
+    private void swapcolumn$wrapHotbarBackground(
             GuiGraphicsExtractor gfx,
             RenderPipeline pipeline,
             Identifier sprite,
             int x, int y, int w, int h,
             Operation<Void> original) {
 
-        if (SwapBarState.isActive() && !SwapBarState.isOpenedWithKeybind()) {
-            int hSlot = SwapBarState.getHotbarSlot();
+        if (SwapColumnState.isActive() && !SwapColumnState.isOpenedWithKeybind()) {
+            int hSlot = SwapColumnState.getHotbarSlot();
             int slotStart = 1 + hSlot * 20;
 
             // 1. Left part of hotbar (before active slot)
@@ -72,14 +72,14 @@ public class InGameHudMixin {
                     target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V",
                     ordinal = 1)
     )
-    private void swapbar$wrapSelection(
+    private void swapcolumn$wrapSelection(
             GuiGraphicsExtractor gfx,
             RenderPipeline pipeline,
             Identifier sprite,
             int x, int y, int w, int h,
             Operation<Void> original) {
 
-        if (SwapBarState.isActive()) {
+        if (SwapColumnState.isActive()) {
             return;
         } else {
             original.call(gfx, pipeline, sprite, x, y, w, h);
@@ -93,7 +93,7 @@ public class InGameHudMixin {
                     target = "Lnet/minecraft/client/gui/Hud;extractSlot(Lnet/minecraft/client/gui/GuiGraphicsExtractor;II Lnet/minecraft/client/DeltaTracker;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;I)V",
                     ordinal = -1)   // -1 = alle Aufrufe (wir filtern selbst)
     )
-    private void swapbar$wrapActiveSlot(
+    private void swapcolumn$wrapActiveSlot(
             Hud hud,
             GuiGraphicsExtractor graphics,
             int x,
@@ -105,7 +105,7 @@ public class InGameHudMixin {
             Operation<Void> original
     )
     {
-        if (SwapBarState.isActive() && player.getInventory().getSelectedItem() == itemStack) {
+        if (SwapColumnState.isActive() && player.getInventory().getSelectedItem() == itemStack) {
             return;
         } else {
             original.call(hud, graphics, x, y, deltaTracker, player, itemStack, seed);
