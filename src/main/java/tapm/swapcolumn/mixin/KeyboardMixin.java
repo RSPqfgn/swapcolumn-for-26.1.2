@@ -52,7 +52,7 @@ public class KeyboardMixin {
         KeyMapping swapKey = SwapColumnClient.swapKeyMapping;
         int hotbarIdx      = swapcolumn$hotbarIndex(mc, event);
 
-        // Mode 2: custom keybind → open menu for current hotbar slot
+        // Mode 2: custom keybind - open menu for current hotbar slot
         if (swapKey != null && swapKey.matches(event)) {
             return SwapColumnState.openMenu(mc.player.getInventory().getSelectedSlot(), true);
         }

@@ -27,7 +27,7 @@ public class SwapColumnClient implements ClientModInitializer {
                 KeyMapping.Category.register(Identifier.fromNamespaceAndPath("swapcolumn", "category"));
 
         swapKeyMapping = new KeyMapping(
-                "key.swapcolumn.swap_menu",      // translation key for the keybind name
+                "key.swapcolumn.swap_column",      // translation key for the keybind name
                 InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_UNKNOWN,        // unbound by default
                 swapcolumnCategory

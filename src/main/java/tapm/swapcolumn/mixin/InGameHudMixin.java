@@ -28,7 +28,6 @@ public class InGameHudMixin {
         }
     }
 
-    // This lets us replace the slot in the hotbar with a custom one (first of the hotbar texture)
     @WrapOperation(
             method = "extractItemHotbar",
             at = @At(value = "INVOKE",
