@@ -4,7 +4,12 @@
   "key.category.swapcolumn.category": "SwapColumn",
   "category.swapcolumn": "SwapColumn",
   "screen.swapcolumn.config": "SwapColumn Configuration",
-  "option.swapcolumn.display_mode": "Display Mode",
-  "option.swapcolumn.display_mode.inventory": "Inventory",
-  "option.swapcolumn.display_mode.hotbar": "Hotbar"
+  "option.swapcolumn.cycling": "Cycling",
+  "option.swapcolumn.cycling.desc": "Cycle back around when scrolling past the top or bottom row. Tip: even with this off you can always scroll the other way on your first scroll.",
+  "option.swapcolumn.cycling.enabled": "Enabled",
+  "option.swapcolumn.cycling.disabled": "Disabled",
+  "option.swapcolumn.slot_texture": "Slot Texture",
+  "option.swapcolumn.slot_texture.desc": "Draw the slot backgrounds using the hotbar textures. Hide them if the slots look wrong or clash with your resource pack.",
+  "option.swapcolumn.slot_texture.shown": "Shown",
+  "option.swapcolumn.slot_texture.hidden": "Hidden"
 }

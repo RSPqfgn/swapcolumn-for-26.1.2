@@ -47,14 +47,18 @@ The config file is located at `.minecraft/config/swapcolumn.json` and is created
 | `enableCycling` | `false` | When scrolling, wrap around from top to bottom and vice versa. Note: scrolling down on the first action always wraps regardless of this setting. |
 | `enableSlotTexture` | `true` | Render slot backgrounds using the vanilla hotbar texture. Disable if your texture pack causes visual issues. |
 
-**Note:** Mod Menu support is planned. Until then, changes to the config file require a game restart to take effect.
+### Mod Menu Support
+
+With [Mod Menu](https://modrinth.com/mod/modmenu) installed, both options can be toggled in-game from the mod list — changes apply immediately. Mod Menu is optional: without it, edit the config file directly (file edits take effect on the next game start).
+
+![SwapColumn configuration screen in Mod Menu, showing the Cycling and Slot Texture toggles](docs/modmenu_config.png)
 
 ---
 
 ## Compatibility
 
-- Minecraft: `26.2-snapshot-2`
-- Fabric Loader: `0.19.1+`
+- Minecraft: `26.2`
+- Fabric Loader: `0.19.3+`
 - Fabric API: required
 
 ---

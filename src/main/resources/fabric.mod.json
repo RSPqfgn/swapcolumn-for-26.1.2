@@ -7,20 +7,28 @@
 	"authors": [
 		"TAPM"
 	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/swapcolumn",
+		"sources": "https://github.com/TAPM04/swapcolumn",
+		"issues": "https://github.com/TAPM04/swapcolumn/issues"
+	},
 	"license": "MIT",
 	"icon": "assets/swapcolumn/icon.png",
 	"environment": "client",
 	"entrypoints": {
 		"client": [
 			"tapm.swapcolumn.client.SwapColumnClient"
+		],
+		"modmenu": [
+			"tapm.swapcolumn.client.ModMenuIntegration"
 		]
 	},
 	"mixins": [
 		"swapcolumn.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.19.1",
-		"minecraft": "~26.2-",
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~26.2",
 		"java": ">=25",
 		"fabric-api": "*"
 	},
