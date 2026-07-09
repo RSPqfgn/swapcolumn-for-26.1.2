@@ -70,6 +70,6 @@ public class SwapColumnConfigScreen extends Screen {
 
     @Override
     public void onClose() {
-        this.minecraft.gui.setScreen(this.parent);
+        this.minecraft.setScreen(this.parent);
     }
 }

@@ -7,7 +7,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.Hud;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Hud.class)
+@Mixin(Gui.class)
 public class InGameHudMixin {
 
     // Hook to render
@@ -89,11 +89,11 @@ public class InGameHudMixin {
     @WrapOperation(
             method = "extractItemHotbar",
             at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/Hud;extractSlot(Lnet/minecraft/client/gui/GuiGraphicsExtractor;II Lnet/minecraft/client/DeltaTracker;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;I)V",
-                    ordinal = -1)   // -1 = alle Aufrufe (wir filtern selbst)
+                    target = "Lnet/minecraft/client/gui/Gui;extractSlot(Lnet/minecraft/client/gui/GuiGraphicsExtractor;II Lnet/minecraft/client/DeltaTracker;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;I)V",
+                    ordinal = -1)   // -1 = all calls (we filter ourselves)
     )
     private void swapcolumn$wrapActiveSlot(
-            Hud hud,
+            Gui gui,
             GuiGraphicsExtractor graphics,
             int x,
             int y,
@@ -107,7 +107,7 @@ public class InGameHudMixin {
         if (SwapColumnState.isActive() && player.getInventory().getSelectedItem() == itemStack) {
             return;
         } else {
-            original.call(hud, graphics, x, y, deltaTracker, player, itemStack, seed);
+            original.call(gui, graphics, x, y, deltaTracker, player, itemStack, seed);
         }
     }
 }

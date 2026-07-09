@@ -39,7 +39,7 @@ public class SwapColumnClient implements ClientModInitializer {
 
         // Close the Menu if another pops up
         ClientTickEvents.END_CLIENT_TICK.register(mc -> {
-            if (SwapColumnState.isActive() && mc.gui.screen() != null) {
+            if (SwapColumnState.isActive() && mc.screen != null) {
                 SwapColumnState.close();
             }
         });

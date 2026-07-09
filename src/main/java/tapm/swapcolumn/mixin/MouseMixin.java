@@ -18,7 +18,7 @@ public class MouseMixin {
         if (!SwapColumnState.isActive()) return;
 
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null || mc.gui.screen() != null) return;
+        if (mc.player == null || mc.screen != null) return;
 
         switch (SwapColumnState.getPhase()) {
             case KEY_HELD -> {

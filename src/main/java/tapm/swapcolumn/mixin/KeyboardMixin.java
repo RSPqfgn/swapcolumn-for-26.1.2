@@ -20,7 +20,7 @@ public class KeyboardMixin {
     private void swapcolumn$onKeyPress(long window, int action, KeyEvent event,
                                     CallbackInfo ci) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null || mc.gui.screen() != null) return;
+        if (mc.player == null || mc.screen != null) return;
 
         if (SwapColumnState.isActive()) {
             if (swapcolumn$handleActiveKey(mc, action, event)) ci.cancel();
